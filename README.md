@@ -1,3 +1,3 @@
 # df-simple-wallet
 
-this is awesomes
+this is awesome
