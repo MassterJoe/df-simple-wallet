@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "Developers foundry wallet system",
   "main": "src/app.ts",
-  "repository": "https://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@github.com/MassterJoe/df-simple-wallet.git",
+  "repository": "https://github.com/MassterJoe/df-simple-wallet.git",
   "author": "Salawu O. Joseph <sojbaba98@gmail.com>",
   "license": "MIT",
   "private": false,
