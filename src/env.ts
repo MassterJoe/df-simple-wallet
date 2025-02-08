@@ -5,7 +5,7 @@ import * as dotenv from "dotenv";
 import * as pkg from "../package.json";
 
 import {
-  // getOsEnv,
+    getOsEnv,
     normalizePort
 } from "./lib/env";
 
@@ -32,4 +32,28 @@ export const env = {
         version: (pkg as any).version,
         port: normalizePort(process.env.PORT || undefined)
     },
-}
+    db: {
+        mongo: {
+            host: getOsEnv("MONGODB_HOST"),
+            port: normalizePort(getOsEnv("MONGODB_PORT")),
+            user: getOsEnv("MONGODB_USERNAME"),
+            pass: getOsEnv("MONGODB_PASSWORD"),
+            database: getOsEnv("MONGODB_DATBASE"),
+        },
+        pg: {
+            host: getOsEnv("PG_HOST"),
+            port: normalizePort(getOsEnv("PG_PORT")),
+            user: getOsEnv("PG_USERNAME"),
+            pass: getOsEnv("PG_PASSWORD"),
+            database: getOsEnv("PG_DATBASE"),
+        },
+    },
+    cache: {
+        redis: {
+            host: getOsEnv("REDIS_HOST"),
+            port: normalizePort(getOsEnv("REDIS_PORT")),
+            user: getOsEnv("REDIS_USERNAME"),
+            pass: getOsEnv("REDIS_PASSWORD"),
+        }
+    }
+};

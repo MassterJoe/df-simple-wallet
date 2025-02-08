@@ -1,5 +1,7 @@
-Mr Wale's thought process ans steps
-nb
+Mr Wale's thought process and steps
+
+#bootstrapping
+
 1. yarn init 
 
 2. create tsconfig.json
@@ -38,3 +40,35 @@ nb
 5. create tsconfig.build.json file
 
 6. create src/app.ts etc
+nb
+7. yarn add typeorm pg mongodb redis typedi
+        "
+            typeorm
+
+            A popular ORM (Object-Relational Mapper) for TypeScript/Node.js.
+            Allows you to work with relational databases using an object-oriented approach.
+            Supports PostgreSQL, MySQL, SQLite, and more.
+
+        pg
+
+            The PostgreSQL driver for Node.js.
+            Needed if you plan to use PostgreSQL with typeorm.
+
+        mongodb
+
+            The MongoDB driver for Node.js.
+            Required if you want to use MongoDB with typeorm.
+
+        redis
+
+            The Redis client for Node.js.
+            Useful for caching, session storage, and message brokering (e.g., Pub/Sub).
+
+        typedi
+
+            A dependency injection (DI) container for TypeScript.
+            Helps manage services, repositories, and controllers cleanly in an application.
+    "
+
+8. eslint
+

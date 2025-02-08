@@ -6,9 +6,9 @@ import helmet from "helmet";
 
 import { env } from "../env";
 
-//import { mongoDBLoader } from "./mongodb";
-//import { postgresLoader } from "./postgres";
-//import { redisLoader } from "./redis";
+import { mongoDBLoader } from "./mongodb";
+import { postgresLoader } from "./postgres";
+import { redisLoader } from "./redis";
 
 
 const { app: appInfo } = env;
@@ -29,8 +29,8 @@ const limiter = rateLimit({
 const expressConfig = async (app: Application): Promise<void> => {
     app.use(cors(corsOptions));
     app.use(limiter);
-    app.use(compression());  //data ti won
-    app.use(urlencoded({ extended: true }));  //form data
+    app.use(compression());  // data ti won
+    app.use(urlencoded({ extended: true }));  // form data
     app.use(json());
     
     app.use(helmet());
@@ -41,9 +41,9 @@ const expressConfig = async (app: Application): Promise<void> => {
         }
     }));
 
-    //await postgresLoader();
-    //await mongoDBLoader();
-    //await redisLoader();
+    await postgresLoader();
+    await mongoDBLoader();
+    await redisLoader();
 
     app.get("/", (req:Request, res:Response) => res.send(`${appInfo.displayName} - v${appInfo.version}`));
 };

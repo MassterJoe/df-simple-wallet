@@ -13,8 +13,8 @@ const { rimraf } = require("rimraf");
         console.log("✔ Cleaned build directory.");
 
         // Lint Code
-//        execSync("eslint -c ./.eslintrc.js .src/ --format stylish --fix --ext .ts");
-  //      console.log("✔ Code linting completed.");
+        execSync("eslint -c ./.eslintrc.js .src/ --format stylish --fix --ext .ts");
+       console.log("✔ Code linting completed.");
 
         // Compile TypeScript
         execSync("tsc --project ./tsconfig.build.json", { stdio: "inherit" });
