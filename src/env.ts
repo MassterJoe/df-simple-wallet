@@ -2,10 +2,12 @@ import * as path from "path";
 
 import * as dotenv from "dotenv";
 
+
 import * as pkg from "../package.json";
 
 import {
     getOsEnv,
+    getOsEnvWithDefault,
     normalizePort
 } from "./lib/env";
 
@@ -14,7 +16,7 @@ import {
  */
 dotenv.config({
     path: path.join(
-        process.cwd(),
+        process.cwd(), /** returns the absolute path where the script is executed */
         `.env${process.env.NODE_ENV === "test" ? ".test" : ""}`
     ),
 });
@@ -31,6 +33,9 @@ export const env = {
         displayName: (pkg as any).displayName,
         version: (pkg as any).version,
         port: normalizePort(process.env.PORT || undefined)
+    },
+    log: {
+        level: getOsEnvWithDefault("LOG_LEVEL", "debug"),
     },
     db: {
         mongo: {

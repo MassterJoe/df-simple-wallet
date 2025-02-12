@@ -6,10 +6,10 @@ import helmet from "helmet";
 
 import { env } from "../env";
 
+import { logLoader } from "./logger";
 import { mongoDBLoader } from "./mongodb";
 import { postgresLoader } from "./postgres";
 import { redisLoader } from "./redis";
-
 
 const { app: appInfo } = env;
 
@@ -41,6 +41,7 @@ const expressConfig = async (app: Application): Promise<void> => {
         }
     }));
 
+    await logLoader();
     await postgresLoader();
     await mongoDBLoader();
     await redisLoader();

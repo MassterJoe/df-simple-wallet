@@ -72,3 +72,8 @@ nb
 
 8. eslint
 
+yarn add -D eslint@8.56.0 eslint-plugin-import eslint-plugin-jsdoc eslint-plugin-prefer-arrow eslint-plugin-no-null typescript-eslint @typescript-eslint/eslint-plugin-tslint @eslint/js
+
+yarn add eslint-plugin-eslint-comments
+
+9. yarn add winston morgan 
