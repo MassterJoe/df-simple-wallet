@@ -77,3 +77,9 @@ yarn add -D eslint@8.56.0 eslint-plugin-import eslint-plugin-jsdoc eslint-plugin
 yarn add eslint-plugin-eslint-comments
 
 9. yarn add winston morgan 
+
+10. yarn add class-validator class-validator-jsonschema class-transformer
+
+11. yarn add bcryptjs  
+
+12. yarn add chance

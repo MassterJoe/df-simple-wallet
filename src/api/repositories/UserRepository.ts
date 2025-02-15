@@ -1,3 +1,7 @@
+/*
+extends the TypeORM repository to add custom methods for handling User entities
+*/
+
 import { dataSource } from "../../config/postgres";
 import User from "../models/postgres/User";
 
