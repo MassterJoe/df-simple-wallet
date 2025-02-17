@@ -5,21 +5,25 @@ import { Logger } from "winston";
 import AuthenticateUserOtp from "../models/payload/requests/AuthenticateUserOtp";
 import AuthenticateUserRequest from "../models/payload/requests/AuthenticateUserRequest";
 import CreateUserRequest from "../models/payload/requests/CreateUserRequest";
+import CreateWalletRequest from "../models/payload/requests/CreateWalletRequest";
 import UpdateUserRequest from "../models/payload/requests/UpdateUserRequest";
 import AddWithdrawalInformationRequest from "../models/postgres/AddWithdrawalInformationRequest";
 import User from "../models/postgres/User";
 import UserWithdrawalInformation from "../models/postgres/UserWithdrawalInformation";
+import Wallet from "../models/postgres/Wallet";
 import { UserRepository } from "../repositories/UserRepository";
 import { UserWithdrawalInformationRepository } from "../repositories/UserWithdrawalInformationRepository";
 
 import UtilityService from "./UtilityService";
+import WalletService from "./WalletService";
 
 
 @Service()
 export default class UserService {
 
     constructor(
-        private log: Logger
+        private log: Logger,
+        private walletService: WalletService
     ){}
 
     public async create(req: CreateUserRequest): Promise<{ isExists: boolean, user: User }>{
@@ -139,5 +143,24 @@ export default class UserService {
         await UserWithdrawalInformationRepository.deleteUserWithdrawalAccount(id);
     }
 
+    /*
+        Wallet service section
+        We create the wallet through the user
+    */
+
+    public async createWallet(req: CreateWalletRequest): Promise<{user: User, wallet: Wallet}>{
+        const user = await this.getUserInformation(req.userId);
+        req.tier = user.tier;
+
+        const wallet = await this.walletService.createWallet(req);
+
+        return { user, wallet };
+    }
+
+    public async listWallets(userId: string): Promise<Wallet[]>{
+        const wallets = await this.walletService.listWallets(userId);
+
+        return wallets;
+    }
 }
 

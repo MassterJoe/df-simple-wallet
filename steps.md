@@ -40,7 +40,7 @@ Mr Wale's thought process and steps
 5. create tsconfig.build.json file
 
 6. create src/app.ts etc
-nb
+nbBN
 7. yarn add typeorm pg mongodb redis typedi
         "
             typeorm
