@@ -1,13 +1,10 @@
-/*
-extends the TypeORM repository to add custom methods for handling User entities
-*/
+import { Not } from "typeorm";
 
 import { dataSource } from "../../config/postgres";
 import User from "../models/postgres/User";
 
-
 export const UserRepository = dataSource.getRepository(User).extend({
-    async add(user: Partial<User>): Promise<User>{
+    async add(user: Partial<User>): Promise<User> {
         return this.save(user);
     },
 
@@ -19,13 +16,22 @@ export const UserRepository = dataSource.getRepository(User).extend({
         return this.findOne({ where: { email } });
     },
 
-    async list(filter: any = {}): Promise<User[]>{
+    async findByOtp(otp: string, email: string): Promise<User> {
+        return this.findOne({ where: { email, otp } });
+    },
+
+    async list(filter: any = {}): Promise<User[]> {
         return this.find({ ...filter });
     },
-    
+
     async updateByUser(user: User, updates?: Partial<User>): Promise<User> {
         await this.update({ id: user.id }, updates);
         return { ...user, ...updates } as User;
+    },
+
+    async updateUserPin(user: User, pin?: Partial<User>): Promise<User> {
+        await this.update({ id: user.id }, pin);
+        return { ...user } as User;
     },
 
     async updateById(id: string, updates?: Partial<User>): Promise<User> {
@@ -34,5 +40,12 @@ export const UserRepository = dataSource.getRepository(User).extend({
 
         return { ...user, ...updates };
     },
-});
 
+    async findUserByPin(user_id: string, pin?: string): Promise<User> {
+        if (pin){
+            return this.findOne({ where: { id: user_id, pin } });
+        }
+
+        return this.findOne({ where: { id: user_id, pin: Not(null) } });
+    },
+});

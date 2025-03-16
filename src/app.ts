@@ -7,7 +7,6 @@ import { Logger } from "./lib/logger";
 
 const log = new Logger();
 
-
 (async () => {
     const { app: appInfo } = env;
 

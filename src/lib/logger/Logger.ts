@@ -22,7 +22,7 @@ export class Logger {
         this.log("error", message, args);
     }
 
-    private log(level: string, message: string, args: any[] = []): void {
+    public log(level: string, message: string, args: any[] = []): void {
         if (winston) {
             winston[level](`${this.formatScope()} ${message}`, ...args);
         }

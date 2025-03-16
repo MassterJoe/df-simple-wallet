@@ -4,6 +4,7 @@ import { Application, json, Request, Response, urlencoded } from "express";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
 
+import routes from "../api/routes";
 import { env } from "../env";
 
 import { logLoader } from "./logger";
@@ -29,8 +30,8 @@ const limiter = rateLimit({
 const expressConfig = async (app: Application): Promise<void> => {
     app.use(cors(corsOptions));
     app.use(limiter);
-    app.use(compression());  // data ti won
-    app.use(urlencoded({ extended: true }));  // form data
+    app.use(compression());
+    app.use(urlencoded({ extended: true }));
     app.use(json());
     
     app.use(helmet());
@@ -46,7 +47,10 @@ const expressConfig = async (app: Application): Promise<void> => {
     await mongoDBLoader();
     await redisLoader();
 
+    app.use("/api", routes);
+
     app.get("/", (req:Request, res:Response) => res.send(`${appInfo.displayName} - v${appInfo.version}`));
+    
 };
 
 export default expressConfig;

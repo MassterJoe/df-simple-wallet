@@ -1,4 +1,4 @@
-import { IsNumber, IsString, Min } from "class-validator";
+import { IsNumber, IsOptional, IsString, Min } from "class-validator";
 
 
 export default class UpdateUserRequest {
@@ -16,6 +16,7 @@ export default class UpdateUserRequest {
     @IsString({ message: "Phone Number is required" })
         phoneNumber: string;
 
+    @IsOptional()
     @IsNumber({}, { message: "State/LGA selection is not valid" })
     @Min(1, { message: "State/LGA selection is not valid" })
         stateLgaId: number;

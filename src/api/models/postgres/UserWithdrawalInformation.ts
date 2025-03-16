@@ -10,7 +10,7 @@ export default class UserWithdrawalInformation {
         id?: number;
     
     @Column()
-    @Index({ unique: true })
+    @Index()
         userId: string;
         
     @Column({

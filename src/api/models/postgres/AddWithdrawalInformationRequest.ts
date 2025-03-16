@@ -1,6 +1,6 @@
 import { IsEnum, IsOptional, IsString } from "class-validator";
 
-import { Currency } from "../../../enums/Currency";
+import { Currency } from "../../enums/Currency";
 
 
 export default class AddWithdrawalInformationRequest {

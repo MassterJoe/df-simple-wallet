@@ -1,5 +1,6 @@
-import { Currency } from "src/api/enums/Currency";
 import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+
+import { Currency } from "../../enums/Currency";
 
 
 @Entity({ name: "wallets" })
@@ -11,8 +12,7 @@ export default class wallet {
     @Column()
     @Index()
         userId: string;
-    
-    
+        
     @Column()
     @Index()
         accountNumber: string;

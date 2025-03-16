@@ -15,7 +15,7 @@ export const dataSource = new DataSource({
     database: pg.database,
     port: +pg.port,
     entities: ["src/api/models/postgres/**/*.ts"],
-    synchronize: false, 
+    synchronize: true,
     logging: true,
     multipleStatements: true,
     ssl: (!env.isLocal && !env.isTest) ? { rejectUnauthorized: false } : false
@@ -33,4 +33,3 @@ export const postgresLoader = async () => {
             console.log(`❌  Error connecting to PostgreSQL database >> ${err}`);
         });
 };
-

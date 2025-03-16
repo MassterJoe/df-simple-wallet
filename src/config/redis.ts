@@ -58,7 +58,8 @@ export const redisLoader = async () => {
         redisClient.on("reconnecting", (attempt) => {
             console.log(`🔄  Reconnecting attempt: ${attempt.attempt}`);
         });
-      
+
+        
         console.log("✅  Connected to Redis cache");
     } catch (err) {
         console.log(`❌  Error connecting to Redis cache >> ${err}`);

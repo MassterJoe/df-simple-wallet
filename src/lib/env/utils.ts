@@ -1,8 +1,8 @@
-import { join } from "path"; /* Join is used to safely join parts of a file together, ensuring that the resulting path is properly formatted for the os */
+import { join } from "path";
 
 
 const delimiter = ",";
-const environmentPaths: Record<string, string> = {    /** Record is typescript utility that allows you to create an object with specific keys and values. e.g Record<Keys, Type>  */
+const environmentPaths: Record<string, string> = {
     production: "dist",
     staging: "dist",
     development: "dist",
@@ -81,7 +81,7 @@ export function toBool(value: string): boolean {
 
 export function normalizePort(port: string): number | string | boolean | undefined {
     if (port === undefined) { return undefined; }
-    const parsedPort = parseInt(port, 10);  /** parseInt converts to integer, the 10 means to ensure its in base 10 so that the compiler wont misinterprete it to be octal base */
+    const parsedPort = parseInt(port, 10);
     if (isNaN(parsedPort)) { // named pipe
         return port;
     }

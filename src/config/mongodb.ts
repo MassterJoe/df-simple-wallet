@@ -1,9 +1,7 @@
-
 import Container from "typedi";
 import { DataSource } from "typeorm";
 
 import { env } from "../env";
-
 
 const { db } = env;
 const { mongo } = db;

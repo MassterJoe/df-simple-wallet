@@ -1,11 +1,10 @@
-
 import { config, configure, format, transports } from "winston";
-
 
 import { env } from "../env";
 
 
 const { combine, colorize, simple, errors } = format;
+
 
 export const logLoader = () => {
     configure({
@@ -17,7 +16,7 @@ export const logLoader = () => {
             simple()
         ),
         transports: [
-            new transports.Console()
+            new transports.Console(),
         ]
     });
 };

@@ -2,7 +2,6 @@ import * as path from "path";
 
 import * as dotenv from "dotenv";
 
-
 import * as pkg from "../package.json";
 
 import {
@@ -16,7 +15,7 @@ import {
  */
 dotenv.config({
     path: path.join(
-        process.cwd(), /** returns the absolute path where the script is executed */
+        process.cwd(),
         `.env${process.env.NODE_ENV === "test" ? ".test" : ""}`
     ),
 });
@@ -30,7 +29,7 @@ export const env = {
 
     app: {
         name: (pkg as any).name,
-        displayName: (pkg as any).displayName,
+        displayName: (pkg as any).displayName || (pkg as any).name,
         version: (pkg as any).version,
         port: normalizePort(process.env.PORT || undefined)
     },
@@ -43,7 +42,7 @@ export const env = {
             port: normalizePort(getOsEnv("MONGODB_PORT")),
             user: getOsEnv("MONGODB_USERNAME"),
             pass: getOsEnv("MONGODB_PASSWORD"),
-            database: getOsEnv("MONGODB_DATBASE"),
+            database: getOsEnv("MONGODB_DATABASE"),
         },
         pg: {
             host: getOsEnv("PG_HOST"),
@@ -60,5 +59,9 @@ export const env = {
             user: getOsEnv("REDIS_USERNAME"),
             pass: getOsEnv("REDIS_PASSWORD"),
         }
+    },
+    jwtConfig: {
+        secret: getOsEnv("JWT_SECRET"),
+        issuer: getOsEnv("JWT_ISSUER"),
     }
 };
