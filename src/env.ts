@@ -49,7 +49,7 @@ export const env = {
             port: normalizePort(getOsEnv("PG_PORT")),
             user: getOsEnv("PG_USERNAME"),
             pass: getOsEnv("PG_PASSWORD"),
-            database: getOsEnv("PG_DATBASE"),
+            database: getOsEnv("PG_DATBASE")
         },
     },
     cache: {

@@ -18,7 +18,9 @@ export const dataSource = new DataSource({
     synchronize: true,
     logging: true,
     multipleStatements: true,
-    ssl: (!env.isLocal && !env.isTest) ? { rejectUnauthorized: false } : false
+    ssl: false
+
+    //ssl: (!env.isLocal && !env.isTest) ? { rejectUnauthorized: false } : false
 });
 
 

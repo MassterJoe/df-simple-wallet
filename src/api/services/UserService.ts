@@ -47,6 +47,4 @@ export default class UserService {
         return { isSuccess: true, user };
     }
 
-
-
 }
