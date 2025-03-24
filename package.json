@@ -11,7 +11,8 @@
   "scripts": {
     "dev": "nodemon",
     "lint": "eslint -c ./.eslintrc.js ./src --format stylish --fix --ext .ts",
-    "start": "yarn lint && yarn dev"
+    "start": "yarn lint && yarn dev",
+    "migration:create": "typeorm migration:create"
   },
   "dependencies": {
     "@types/node": "^22.13.1",
