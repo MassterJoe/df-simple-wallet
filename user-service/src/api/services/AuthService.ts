@@ -98,5 +98,4 @@ export default class AuthService {
             isSuccess: true
         };
     }
-
 }

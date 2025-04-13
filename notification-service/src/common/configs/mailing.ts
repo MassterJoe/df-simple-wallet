@@ -1,27 +1,14 @@
-import { CONFIGS } from "../config";
-import hbs from "nodemailer-express-handlebars"
+import { CONFIGS } from ".";
 import nodemailer from "nodemailer"
 import path from "path"
+import SMTPTransport from "nodemailer/lib/smtp-transport";
 
 export const emailTransporter = nodemailer.createTransport({
     host: CONFIGS.MAIL.MAIL_HOST,
-    port: 465,
-    secure: CONFIGS.MAIL.MAIL_SECURE as boolean,
+    port: CONFIGS.MAIL.MAIL_PORT as unknown as number,
+    secure: false,
     auth: {
         user: `${CONFIGS.MAIL.MAIL_USERNAME}`,
         pass: `${CONFIGS.MAIL.MAIL_PASSWORD}`
     }
-});
-
-emailTransporter.use(
-    "compile",
-    hbs({
-        viewEngine: {
-            partialsDir: path.join(__dirname, "views/emails/partials"),
-            layoutsDir: path.join(__dirname, "views/emails/layouts"),
-            defaultLayout: "main",
-        },
-        viewPath: path.join(__dirname, "views/emails"),
-        extName: ".hbs",
-    })
-);
+} as SMTPTransport.Options);
