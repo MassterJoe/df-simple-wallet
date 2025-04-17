@@ -12,7 +12,10 @@
     "experimentalDecorators": true,
     "strict": true,
     "skipLibCheck": true,
-    "noEmit": true
+    "noEmit": true,
+    "paths": {
+      "@shared/*": ["./shared-commons/src/*"]
+    }
   },
   "include": [
     "src/**/*",

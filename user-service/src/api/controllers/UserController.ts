@@ -2,7 +2,7 @@ import { CustomApiResponse, serverErrorResponse } from '../helpers/responseHandl
 import UserService from "../services/UserService";
 import { Inject, Service } from 'typedi';
 import { Logger } from "../../lib/logger";
-import { Example, Get, Request, Route, Security, Tags, Controller, Put } from "tsoa";
+import { Example, Get, Request, Route, Security, Tags, Controller, Put, Post } from "tsoa";
 import { FetchProfileResponseDTO, UpdateProfileResponseDTO } from "../dtos/UserDTO";
 import { CreatePinDTO } from "../dtos/UserPinDTO";
 import { errorResponse, successResponse } from "../helpers/responseHandlers";
@@ -23,12 +23,10 @@ export class UserController extends Controller {
         }
 
     @Get("/")
-    // @Security("bearerAuth")
-    public async testIt(@Request() req: any)
+    @Security("bearerAuth")
+    public async getUserInformation(@Request() req: any)
     // : Promise<FetchProfileResponseDTO> 
     {
-        this.setStatus(200)
-        return successResponse("message", null)
         // try {
         //     const authUserId = req.authId
         //     const fetchedUser = await this.userService.getUserInformation(authUserId);
@@ -38,7 +36,7 @@ export class UserController extends Controller {
         //             message,
         //             metadata: {
         //                 user: {
-        //                     email: fetchedUser?.email
+        //                     id: fetchedUser?.id
         //                 }
         //             }
         //         });
@@ -52,7 +50,7 @@ export class UserController extends Controller {
         //             message,
         //             metadata: {
         //                 user: {
-        //                     email: fetchedUser.email
+        //                     id: fetchedUser.id
         //                 }
         //             }
         //         });
@@ -73,9 +71,10 @@ export class UserController extends Controller {
     }
 
     @Security("bearerAuth")
+    @Post('/pin')
     public async createNewPin(@Request() req: any) {
         try {
-            const pin = req.pin;
+            const pin = req.body.pin;
             const user_id = req.authId;
             const createPin = await this.userService.setPin(user_id, pin);
             const { message, isSuccess } = createPin
@@ -110,7 +109,9 @@ export class UserController extends Controller {
 
     @Put("/")
     @Security("bearerAuth")
-    public async updateProfile(@Request() req: any): Promise<CustomApiResponse> {
+    public async updateProfile(@Request() req: any)
+    : Promise<CustomApiResponse> 
+    {
         try {
             const updatedUser = await this.userService.update(req.authId, req.body);
             const { message, user, isSuccess } = updatedUser;
@@ -120,7 +121,7 @@ export class UserController extends Controller {
                     message,
                     metadata: {
                         user: {
-                            email: updatedUser?.user?.email
+                            email: updatedUser?.user?.user_id
                         }
                     }
                 });
@@ -132,7 +133,7 @@ export class UserController extends Controller {
                     message: updatedUser.message,
                     metadata: {
                         user: {
-                            email: updatedUser?.user?.email
+                            id: updatedUser?.user?.user_id
                         }
                     }
                 });

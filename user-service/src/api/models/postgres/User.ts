@@ -1,86 +1,50 @@
-import { Column, CreateDateColumn, Entity, Index, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, Index, ManyToOne, OneToMany, PrimaryColumn, UpdateDateColumn } from "typeorm";
 
 import StateLGA from "./StateLGA";
+import { BaseModel } from "./base";
+import UserKYCInfomation from "./UserKYCInfomation";
 
+export enum AccountStatus {
+    ACTIVE = "active",
+    INACTIVE = "inactive",
+    SUSPENDED = "suspended",
+    PENDING = "pending",
+    BANNED = "banned",
+}
+export interface IUser {
+    _id: string;
+    email: string;
+    password: string;
+    otp: string;
+    password_reset_token: string;
+    password_reset_expires_at: Date;
+    verified_at: Date;
+    email_verification_token: string;
+    email_verification_expires_at: Date;
+    status: AccountStatus;
+}
 
-@Entity({ name: "users" })
-export default class User {
-    @Column()
-    @PrimaryGeneratedColumn("uuid")
-        id?: string;
-
-    @Column()
-    @Index({ unique: true })
-        email!: string;
-
-    @Column()
-        password!: string;
+@Entity("users")
+export default class User extends BaseModel {
+    @Column({unique: true})
+    user_id!: string;
 
     @Column({ nullable: true })
-    // @Index()
-        firstName!: string;
+    first_name?: string;
 
     @Column({ nullable: true })
-    // @Index()
-        lastName!: string;
+    last_name?: string;
 
     @Column({nullable: true})
-        address!: string;
+    address?: string;
 
     @Column({ nullable: true })
-        phoneNumber!: string;
-
-    @Column({ type: "integer", nullable: true })
-        stateLgaId!: number;
+    phoneNumber?: string;
 
     @Column({ nullable: true })
-        profilePicture?: string;
+    pin?: string;
 
-    @Column({ type: "integer", default: 1 })
-    @Index()
-        tier?: number;
+    @OneToMany(() => UserKYCInfomation, (kyc)=>kyc.user_id)
+    kyc?: UserKYCInfomation
 
-    @Column({ nullable: true })
-        pin?: string;
-
-    @Column({ nullable: true })
-    otp?: string;
-
-    @Column({ nullable: true, unique: true })
-    password_reset_token?: string;
-
-    @Column({ nullable: true })
-    token_expires_at?: Date;
-
-    @Column({ default: false })
-    @Index()
-        isValidated?: boolean;
-
-    @Column({ default: false })
-    @Index()
-        isActive?: boolean;
-
-    @Column({ default: false })
-    @Index()
-        isEnabled?: boolean;
-
-    @Column({ default: false })
-    @Index()
-        isDeleted?: boolean;
-
-    @CreateDateColumn()
-    @Index()
-        createdAt?: string;
-
-    @UpdateDateColumn()
-    @Index()
-        lastUpdatedAt?: Date;
-
-    @Column({nullable:true})
-    deletedAt?: Date;
-
-    // ======== JOINS =========
-
-    @ManyToOne(() => StateLGA, (stateLga) => stateLga.id)
-        stateLga?: StateLGA;
 }

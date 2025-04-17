@@ -24,6 +24,182 @@
 				],
 				"type": "object",
 				"additionalProperties": false
+			},
+			"DocumentType": {
+				"enum": [
+					"Int'l Passport",
+					"Voter's Card",
+					"Driver's License",
+					"NIN",
+					"BVN"
+				],
+				"type": "string"
+			},
+			"KYCTiers": {
+				"enum": [
+					"tier1",
+					"tier2"
+				],
+				"type": "string"
+			},
+			"KYCStatus": {
+				"enum": [
+					"active",
+					"inactive",
+					"suspended",
+					"pending",
+					"banned"
+				],
+				"type": "string"
+			},
+			"UserKYCInfomation": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"created_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updated_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"deleted_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"user_id": {
+						"type": "string"
+					},
+					"first_name": {
+						"type": "string"
+					},
+					"middle_name": {
+						"type": "string"
+					},
+					"last_name": {
+						"type": "string"
+					},
+					"date_of_birth": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"date_of_birth_submitted": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"document_type": {
+						"$ref": "#/components/schemas/DocumentType"
+					},
+					"tier": {
+						"$ref": "#/components/schemas/KYCTiers"
+					},
+					"document_id": {
+						"type": "string"
+					},
+					"status": {
+						"$ref": "#/components/schemas/KYCStatus"
+					}
+				},
+				"required": [
+					"id",
+					"created_at",
+					"user_id",
+					"first_name",
+					"middle_name",
+					"last_name",
+					"date_of_birth",
+					"date_of_birth_submitted",
+					"tier",
+					"document_id",
+					"status"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"FetchKYCResponseDTO": {
+				"properties": {
+					"kyc": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/UserKYCInfomation"
+							}
+						],
+						"nullable": true
+					},
+					"message": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"User": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"created_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updated_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"deleted_at": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"user_id": {
+						"type": "string"
+					},
+					"first_name": {
+						"type": "string"
+					},
+					"last_name": {
+						"type": "string"
+					},
+					"address": {
+						"type": "string"
+					},
+					"phoneNumber": {
+						"type": "string"
+					},
+					"pin": {
+						"type": "string"
+					},
+					"kyc": {
+						"$ref": "#/components/schemas/UserKYCInfomation"
+					}
+				},
+				"required": [
+					"id",
+					"created_at",
+					"user_id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"FetchProfileResponseDTO": {
+				"properties": {
+					"user": {
+						"allOf": [
+							{
+								"$ref": "#/components/schemas/User"
+							}
+						],
+						"nullable": true
+					},
+					"message": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {
@@ -47,129 +223,52 @@
 		}
 	},
 	"paths": {
-		"/withdrawal-accounts": {
-			"post": {
-				"operationId": "CreateNewWithdrawalAccount",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/CustomApiResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Withdrawal Bank Accounts"
-				],
-				"security": [
-					{
-						"bearerAuth": []
-					}
-				],
-				"parameters": []
-			},
-			"get": {
-				"operationId": "ListWithdrawalAccounts",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/CustomApiResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Withdrawal Bank Accounts"
-				],
-				"security": [
-					{
-						"bearerAuth": []
-					}
-				],
-				"parameters": []
-			}
-		},
-		"/withdrawal-accounts/{account_id}": {
-			"delete": {
-				"operationId": "DeleteWithdrawalAccount",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/CustomApiResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Withdrawal Bank Accounts"
-				],
-				"security": [
-					{
-						"bearerAuth": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "account_id",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			},
-			"get": {
-				"operationId": "ShowWithdrawalAccountDetails",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/CustomApiResponse"
-								}
-							}
-						}
-					}
-				},
-				"tags": [
-					"Withdrawal Bank Accounts"
-				],
-				"security": [
-					{
-						"bearerAuth": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "account_id",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
 		"/": {
 			"get": {
-				"operationId": "TestIt",
+				"operationId": "GetUserInformation",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"tags": [
+					"User Profile"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": []
+			},
+			"put": {
+				"operationId": "UpdateProfile",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CustomApiResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User Profile"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/pin": {
+			"post": {
+				"operationId": "CreateNewPin",
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -200,25 +299,55 @@
 				"tags": [
 					"User Profile"
 				],
-				"security": [],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
 				"parameters": []
-			},
-			"put": {
-				"operationId": "UpdateProfile",
+			}
+		},
+		"/kyc": {
+			"post": {
+				"operationId": "Tier1_kyc",
 				"responses": {
 					"200": {
 						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/CustomApiResponse"
+									"$ref": "#/components/schemas/FetchKYCResponseDTO"
 								}
 							}
 						}
 					}
 				},
 				"tags": [
-					"User Profile"
+					"User KYC"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": []
+			},
+			"get": {
+				"operationId": "GetUserKyc",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/FetchProfileResponseDTO"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User KYC"
 				],
 				"security": [
 					{
